@@ -1,9 +1,14 @@
 import Task from "./Task"
 
-export default function TaskList () {
+export default function TaskList ({tasks}) {
     return (
     <ul className="todo-list">
-        <Task status="completed" description={"Learn React"}/>
+        {tasks.map((task, index) => (
+  <Task
+    key={index}
+    description={task}
+  />
+))}
     </ul>
     )
 }

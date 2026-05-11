@@ -1,7 +1,7 @@
 export default function Task({status, description}) {
 
     console.log(status)
-    
+
     return (
         <ul className="todo-list">
   
