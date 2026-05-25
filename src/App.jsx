@@ -55,7 +55,7 @@ function App() {
   }
 
   return (
-    <section id="todoapp">
+    <section class="todoapp">
       <NewTaskForm onAddTask={addTask}/>
       <TaskList   
         tasks={tasks}
