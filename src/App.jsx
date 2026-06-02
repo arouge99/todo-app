@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import './App.css'
 import Footer from './components/Footer'
@@ -8,11 +8,20 @@ import TaskList from './components/TaskList'
 function App() {
 
   const [tasks, setTasks] = useState([])
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/todos')
+      .then((response) => response.json())
+      .then((data) => setTasks(data))
+  }, [])
+
+  const activeTasksCount =
+  tasks.filter((task) => task.completed === false).length
   
-  function addTask(description) {
+  function addTask(title) {
     const newTask = {
     id: Date.now(),
-    description: description,
+    title: title,
     completed: false,
     editing: false,
   }
@@ -63,7 +72,8 @@ function App() {
         onDeleteTask={deleteTask}
         onEditTask={editTask}
         onSaveTask={saveTask}/>   
-      <Footer/> 
+      <Footer
+      activeTasksCount={activeTasksCount}/> 
     </section>
   )
 } 

@@ -8,7 +8,7 @@ export default function TaskList({ tasks, onToggleTask, onDeleteTask, onEditTask
         {tasks.map((task) => (
   <Task
     key={task.id}
-    description={task.description}
+    title={task.title}
     completed={task.completed}
     onToggleTask={() => onToggleTask(task.id)}
     onDeleteTask={() => onDeleteTask(task.id)}
