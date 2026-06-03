@@ -17,6 +17,8 @@ function App() {
 
   const activeTasksCount =
   tasks.filter((task) => task.completed === false).length
+
+  const [filter, setFilter] = useState('all')
   
   function addTask(title) {
     const newTask = {
@@ -43,6 +45,10 @@ function App() {
     setTasks(tasks.filter((task) => task.id !== id))
   }
 
+  function clearCompleted() {
+    setTasks(tasks.filter((task) => !task.completed))
+  }
+
   function editTask(id) {
     setTasks(tasks.map((task) => {
       if (task.id === id) {
@@ -63,17 +69,32 @@ function App() {
     }))
   }
 
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === 'active') {
+      return !task.completed
+    }
+  
+    if (filter === 'completed') {
+      return task.completed
+    }
+  
+    return true
+  })
+
   return (
     <section class="todoapp">
       <NewTaskForm onAddTask={addTask}/>
       <TaskList   
-        tasks={tasks}
+        tasks={filteredTasks}
         onToggleTask={toggleTask}
         onDeleteTask={deleteTask}
         onEditTask={editTask}
         onSaveTask={saveTask}/>   
       <Footer
-      activeTasksCount={activeTasksCount}/> 
+      activeTasksCount={activeTasksCount}
+      filter={filter}
+      onFilterChange={setFilter}
+      onClearCompleted={clearCompleted}/> 
     </section>
   )
 } 
