@@ -12,7 +12,13 @@ function App() {
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/todos')
       .then((response) => response.json())
-      .then((data) => setTasks(data))
+      .then((data) => {
+        const tasksWithCreatedAt = data.map((task) => ({
+          ...task,
+          createdAt: new Date(),
+        }))
+        setTasks(tasksWithCreatedAt)
+      })
   }, [])
 
   const activeTasksCount =
@@ -26,6 +32,7 @@ function App() {
     title: title,
     completed: false,
     editing: false,
+    createdAt: new Date(),
   }
   
     setTasks([...tasks, newTask])
@@ -49,20 +56,10 @@ function App() {
     setTasks(tasks.filter((task) => !task.completed))
   }
 
-  function editTask(id) {
-    setTasks(tasks.map((task) => {
-      if (task.id === id) {
-        return { ...task, editing: !task.editing }
-      }
-  
-      return task
-    }))
-  }
-
   function saveTask(id, newDescription) {
     setTasks(tasks.map((task) => {
       if (task.id === id) {
-        return { ...task, description: newDescription, editing: false }
+        return { ...task, title: newDescription, }
       }
   
       return task
@@ -82,13 +79,13 @@ function App() {
   })
 
   return (
-    <section class="todoapp">
+    <section className="todoapp">
       <NewTaskForm onAddTask={addTask}/>
       <TaskList   
         tasks={filteredTasks}
         onToggleTask={toggleTask}
         onDeleteTask={deleteTask}
-        onEditTask={editTask}
+    
         onSaveTask={saveTask}/>   
       <Footer
       activeTasksCount={activeTasksCount}

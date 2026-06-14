@@ -1,6 +1,8 @@
 import { useState } from "react"
+import { formatDistanceToNow } from "date-fns";
+import PropTypes from "prop-types";
 
-export default function Task({ completed, title, editing, onToggleTask, onDeleteTask, onEditTask, onSaveTask}) {
+export default function Task({ completed, title, onToggleTask, onDeleteTask, onSaveTask, createdAt}) {
 
   const [editValue, setEditValue] = useState(title)
   const [isEditing, setIsEditing] = useState(false)
@@ -17,7 +19,11 @@ export default function Task({ completed, title, editing, onToggleTask, onDelete
                 onChange={onToggleTask}/>
             <label>
               <span className="description">{title}</span>
-              <span className="created">created 17 seconds ago</span>
+              <span className="created">
+  {createdAt
+    ? `created ${formatDistanceToNow(new Date(createdAt))} ago`
+    : 'created unknown time ago'}
+</span>
             </label>
             <button className="icon icon-edit" onClick={() =>setIsEditing(true)} ></button>
             <button className="icon icon-destroy" onClick={onDeleteTask}></button>
@@ -25,8 +31,9 @@ export default function Task({ completed, title, editing, onToggleTask, onDelete
           <input 
            type="text"
            className="edit"
-           value={editValue}
-           onChange={(event) => setEditValue(event.target.value)}
+           defaultValue={title}
+           //value={editValue}
+           //onChange={(event) => setEditValue(event.target.value)}
            onKeyDown={(event) => {
             if (event.key === 'Enter') {
               onSaveTask(editValue);
@@ -35,4 +42,16 @@ export default function Task({ completed, title, editing, onToggleTask, onDelete
            }}/>
         </li>
   )
+}
+
+Task.propTypes = {
+  title: PropTypes.string,
+  completed: PropTypes.bool,
+  editing: PropTypes.bool,
+}
+
+Task.defaultProps = {
+  title: '',
+  completed: false,
+  editing: false,
 }

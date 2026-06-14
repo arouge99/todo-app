@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import TasksFilter from "./TasksFilter";
 
 export default function Footer ({activeTasksCount, filter, onFilterChange, onClearCompleted}) {
@@ -16,4 +17,14 @@ export default function Footer ({activeTasksCount, filter, onFilterChange, onCle
         </button>
       </footer>
       )
+}
+
+Footer.propType = {
+  activeTasksCount: PropTypes.number,
+  filter: PropTypes.string,
+}
+
+Footer.defaultProps = {
+  activeTasksCount: 0,
+  filter: 'All', 
 }

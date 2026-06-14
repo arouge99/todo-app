@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import Task from "./Task"
 
 export default function TaskList({ tasks, onToggleTask, onDeleteTask, onEditTask, onSaveTask}) {
@@ -15,8 +16,16 @@ export default function TaskList({ tasks, onToggleTask, onDeleteTask, onEditTask
     onEditTask={() => onEditTask(task.id)}
     editing={task.editing}
     onSaveTask={(newDescription) => onSaveTask(task.id, newDescription)}
+    createdAt={task.createdAt}
   />
 ))}
     </ul>
     )
+}
+
+TaskList.propTypes = {
+  tasks: PropTypes.array,
+}
+TaskList.defaultProps = {
+  tasks: [],
 }

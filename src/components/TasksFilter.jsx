@@ -1,3 +1,5 @@
+import PropTypes from "prop-types"
+
 export default function TasksFilter({ filter, onFilterChange}) {
     return (
         <ul className="filters">
@@ -25,3 +27,10 @@ export default function TasksFilter({ filter, onFilterChange}) {
       </ul>
     )
 } 
+
+TasksFilter.PropTypes = {
+  filter: PropTypes.string,
+}
+TasksFilter.defaultProps = {
+  filter: 'all',
+}
